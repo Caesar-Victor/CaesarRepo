@@ -11,4 +11,4 @@ while f-math.sqrt(2)>e or i>=1000:
 if i<1000:
     print("Numero de iterações necessarias com X0 = %f e erro = %f: %d" % (x, e, i))
 else:
-    printf("Nao foi possivel fazer uma boa aproximacao")
+    print("Nao foi possivel fazer uma boa aproximacao")
