@@ -1,5 +1,8 @@
-import math
+from math import *
 
-a = 12 * 0.70
+x = 0.75036386784
 
-print (a)
+a = x - (cos(x)-x)/(-sin(x)-1)
+
+b = cos(1)
+print (b-2)
