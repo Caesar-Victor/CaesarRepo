@@ -9,10 +9,10 @@ int main()
     scanf("%d", &b);
     do{
         printf("Digite a operação(+, -, *, /, s para sair): ");
-        'scanf(" %c", &c);'
+        scanf(" %c", &c);
         if (c == '+')
         {
-            printf("a + b = %d\n", a + b);
+            printf("a+b = %d\n", a + b);
         }
         else if (c == '-')
         {
@@ -24,13 +24,13 @@ int main()
         }
         else if (c == '/')
         {
-            printf("a / b = %f\n", a / b);
+            printf("a / b = %f\n", a/b);
         }
         else
         {
             printf("Operação inválida\n");
         }
-    } while (c =!'s');
+    } while (c != 's');
 
     return 0;
 }
