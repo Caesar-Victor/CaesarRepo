@@ -1,4 +1,4 @@
-#from ~thestr4ng3r/chiaki 
+#from ~thestr4ng3r/chiaki on GitHub
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
