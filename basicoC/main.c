@@ -1,6 +1,5 @@
 #include <stdio.h>
-int main()
-{
+int main(){
     int a, b;
     char c;
     printf("Digite a: ");
