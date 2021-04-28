@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#define x0 0;
+#define x0 3.5;
 
 void fflinha(int i, float x, float f[]){
     switch (i)
@@ -36,6 +36,10 @@ void fflinha(int i, float x, float f[]){
         f[1] = 1/(2*sqrt(x));
         break;
 
+    case 6:
+        f[0] = pow(x, 3) - 6 *x*x + 9*x - 2;
+        f[1] = 3 *x*x - 12 * x + 9;
+
     default:
         break;
     } 
@@ -45,16 +49,15 @@ int main(int argc, char const *argv[]) {
     float ffli[2] = {0, 0};
     float phi = 0, emax = 0.000001, e = 10000, x = x0; 
     int c = 0;
-    for (int i=0; i<=5; i++){
+    for (int i=0; i<=6; i++){
         c = 0;
         e = 1000;
-        x = x0;
         do{
         c += 1; 
         fflinha(i, x, ffli);
         phi = x - (ffli[0]/ffli[1]);
         if (ffli[1]==0){
-            printf("f'(%f) = ", x);
+            printf("f'(%f) = 0", x);
             c = 1000;
         }else if (e >= fabs(phi - x)){
             e = fabs(phi - x);
@@ -63,7 +66,8 @@ int main(int argc, char const *argv[]) {
         }else {
             c = 1000;
         }
-        }while(e>emax && c<1000); 
+        }while(e>emax && c<1000);
+        x = x0; 
         if (c<1000){
         printf("Numero de iterações necessárias com X0 = %f e erro = %f para F%d: %d\n\n", x, emax, i, c);
         }else {
