@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
-#define x0 3.5;
+#define x0 3.73;
 
 void fflinha(int i, float x, float f[]){
     switch (i)

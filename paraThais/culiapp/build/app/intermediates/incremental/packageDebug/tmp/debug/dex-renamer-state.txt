@@ -1,4 +1,0 @@
-#Sun May 24 01:04:43 BRT 2020
-base.0=/home/caesarvictor/OneDrive/Documents/programas/paraThais/culiapp/build/app/intermediates/dex/debug/mergeDexDebug/out/classes.dex
-path.0=classes.dex
-renamed.0=classes.dex
