@@ -12,14 +12,14 @@ void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
     *r2 = *r2 + pass[i] * (i - 5);
   }
 }
-int main()
+int main(void)
 {
   FILE *arquivo;
   char nome[500], x[200];
   char senha[500], car, ca;
   int k = 0;
   printf("Digite o nome do arquivo a ser decodificado: ");
-  gets(nome);
+  scanf(nome);
   arquivo = fopen(nome, "rb");
   strcpy(x, nome);
   char c1, c2, c3, c4;
@@ -31,7 +31,7 @@ int main()
   {
     printf("Arquivo nao codificado");
     getch();
-    return;
+    return 0;
   }
   printf("Digite uma senha, quando terminar aperte ENTER: \n");
   do
@@ -50,7 +50,7 @@ int main()
   {
     printf("senha incorreta");
     getch();
-    return;
+    return 0;
   }
 
   FILE *novo;
