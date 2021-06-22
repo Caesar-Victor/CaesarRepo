@@ -26,3 +26,5 @@ for k in range (0, itmax):
 ax = np.matmul(a,x)
 print("Ax = ", ax)
 print("Maximo residuo",np.max(np.abs(b-ax)))
+
+
