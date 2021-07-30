@@ -1,11 +1,11 @@
 import numpy as np
 
 n = 3
-a = np.array([[9,3,1],[-5, 10, -4],[-10,7,18]])
-b = np.array([-6,-7,2])
+a = np.array([[1, 1, 12],[-6, -6, 2],[-8, 2, -9]])
+b = np.array([8, 5, 6])
 
 itmax=10
-x=np.zeros(n)
+x=np.array([0, -1, -1])
 
 print("x(",0,") =", x)
 

@@ -10,22 +10,13 @@ from decimal import *
 
 s=int(input("Qts algarismos significativos?: "))
 getcontext().prec = s
-d=int(input("Qual a dimensao do sistema?: "))
-A=[]
-b = []
-for i in range(d):
-    A.append([])
-    for j in range (d):
-        uou=1*Decimal(input("Insira o elemento %d da linha %d: "%(j+1,i+1)))
-        A[i].append(uou)
-    iei=1*Decimal(input("Insira o elemento %d do lado direito: "%(i+1)))
-    b.append(iei)
-
+A=[[1, -6, -8], [1, -6, 2], [12, 2, -9]]
+b = [8, 5, 6]
 
 def linearsolver(A,b):
   n = len(A)
   M = A
-  L=np.diag(np.zeros(d))
+  L=np.diag(np.zeros(3))
   i = 0
   for x in M:
    x.append(b[i])
@@ -56,7 +47,7 @@ def linearsolver(A,b):
         z = Decimal(z  + Decimal((M[i][j])*x[j]))
     x[i] =Decimal( Decimal((M[i][n] - z))/M[i][i])
   
-  L=L+np.diag(np.ones(d))  
+  L=L+np.diag(np.ones(3))  
   print ("Solução:")
   print(np.array(x).astype(float))
   print("")
