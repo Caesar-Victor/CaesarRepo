@@ -36,7 +36,9 @@ function Celcius(valor) {
     if (document.getElementById("frht").checked){
         texto += "O valor em Fahrenheit é: "+valorFrht.toFixed(4)+"<br/>"
     }if (document.getElementById("kelvin").checked){
-        texto += "O valor em Kelvin é: "+valorKevin.toFixed(4)
+        texto += "O valor em Kelvin é: "+valorKevin.toFixed(4)+"<br/>"
+    }if (document.getElementById("celcius")){
+        texto += "O valor Celcius é: "+ valor
     }
     return texto
 }
@@ -44,10 +46,12 @@ function Frht(valor) {
     var texto = "";
     var valorCelcius = (valor - 32) / 1.8
     var valorKevin = ((valor - 32) * (5/9)) + 273
-    if (document.getElementById("frht").checked){
+    if (document.getElementById("celcius").checked){
         texto += "O valor em Celcius é: "+valorCelcius.toFixed(4)+"<br/>"
     }if (document.getElementById("kelvin").checked){
-        texto += "O valor em Kelvin é: "+valorKevin.toFixed(4)
+        texto += "O valor em Kelvin é: "+valorKevin.toFixed(4)+"<br/>"
+    }if (document.getElementById("frht")){
+        texto += "O valor Fahrenheit é: "+ valor
     }
     return texto
 }
@@ -57,8 +61,10 @@ function Kelvin(valor) {
     var valorFrht = ((valor - 273.15) * 1.8) + 32
     if (document.getElementById("frht").checked){
         texto += "O valor em Celcius é: "+valorCelcius.toFixed(4)+"<br/>"
-    }if (document.getElementById("kelvin").checked){
-        texto += "O valor em Kelvin é: "+valorFrht.toFixed(4)
+    }if (document.getElementById("frht").checked){
+        texto += "O valor em Fahrenheit é: "+valorFrht.toFixed(4)+"<br/>"
+    }if (document.getElementById("kelvin")){
+        texto += "O valor Kelvin é: "+ valor
     }
     return texto
 }
