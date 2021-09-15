@@ -18,7 +18,7 @@ function Converter(evento) {
         elemento.innerHTML = textoDeSaida;
     } else if (evento == "temperatura"){
         if (document.getElementById("c").checked){
-            textoDeSaida = Celcius(valorElemento)
+            textoDeSaida = Celsius(valorElemento)
             elemento.innerHTML = textoDeSaida;
         }else if(document.getElementById("f").checked){
             textoDeSaida = Frht(valorElemento)
@@ -29,7 +29,7 @@ function Converter(evento) {
         }
     }
 }
-function Celcius(valor) {
+function Celsius(valor) {
     var texto = "";
     var valorFrht = 1.8*valor + 32
     var valorKevin = valor + 273.15
@@ -37,33 +37,33 @@ function Celcius(valor) {
         texto += "O valor em Fahrenheit é: "+valorFrht.toFixed(4)+"<br/>"
     }if (document.getElementById("kelvin").checked){
         texto += "O valor em Kelvin é: "+valorKevin.toFixed(4)+"<br/>"
-    }if (document.getElementById("celcius")){
-        texto += "O valor Celcius é: "+ valor
+    }if (document.getElementById("celsius").checked){
+        texto += "O valor Celsius é: "+ valor
     }
     return texto
 }
 function Frht(valor) {
     var texto = "";
-    var valorCelcius = (valor - 32) / 1.8
+    var valorCelsius = (valor - 32) / 1.8
     var valorKevin = ((valor - 32) * (5/9)) + 273
-    if (document.getElementById("celcius").checked){
-        texto += "O valor em Celcius é: "+valorCelcius.toFixed(4)+"<br/>"
+    if (document.getElementById("celsius").checked){
+        texto += "O valor em Celsius é: "+valorCelsius.toFixed(4)+"<br/>"
     }if (document.getElementById("kelvin").checked){
         texto += "O valor em Kelvin é: "+valorKevin.toFixed(4)+"<br/>"
-    }if (document.getElementById("frht")){
+    }if (document.getElementById("frht").checked){
         texto += "O valor Fahrenheit é: "+ valor
     }
     return texto
 }
 function Kelvin(valor) {
     var texto = "";
-    var valorCelcius = valor - 273.15
+    var valorCelsius = valor - 273.15
     var valorFrht = ((valor - 273.15) * 1.8) + 32
     if (document.getElementById("frht").checked){
-        texto += "O valor em Celcius é: "+valorCelcius.toFixed(4)+"<br/>"
+        texto += "O valor em Celsius é: "+valorCelsius.toFixed(4)+"<br/>"
     }if (document.getElementById("frht").checked){
         texto += "O valor em Fahrenheit é: "+valorFrht.toFixed(4)+"<br/>"
-    }if (document.getElementById("kelvin")){
+    }if (document.getElementById("kelvin").checked){
         texto += "O valor Kelvin é: "+ valor
     }
     return texto
