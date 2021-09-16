@@ -10,6 +10,7 @@ function Chutar() {
         if (chute == numSecreto) {
             resultado.innerHTML = "Você acertou!!!"
             acertou = true;
+            botao.innerHTML = "<a href='site.html' target='_self'>Tentar novamente"
         } else if (chute < 0 || chute > 10) {
             resultado.innerHTML = "Digite um valor válido"
         } else {
@@ -24,7 +25,7 @@ function Chutar() {
     }
     if (numChances == 0) {
         resultado.innerHTML = "Game Over!<br/>O número secreto era: "+numSecreto
-        numSecreto = parseInt(Math.random()*10)
+        botao.innerHTML = "<a href='site.html' target='_self'>Tentar novamente"
     }
 }
 
