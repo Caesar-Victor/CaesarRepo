@@ -33,7 +33,7 @@ function addFilme() {
         nut[2].innerHTML = "Filme repetido";
     } else {
         filmes.push([nut[0], nut[1]]);
-        document.body.innerHTML += "<img src=" + nut[1] + ">"
+        document.getElementById("posters").innerHTML += ("<img src=" + nut[1] + ">")
     }
 }
 

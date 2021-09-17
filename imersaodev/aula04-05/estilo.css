@@ -6,6 +6,7 @@ body {
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
+    height: 100%;
   }
   
   .container {
@@ -43,5 +44,6 @@ body {
   
   img {
     max-height: 250px;
+    padding: 5px;
   }
   
