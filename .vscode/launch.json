@@ -4,7 +4,29 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
+        {
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "name": "Launch site.html",
+            "file": "${workspaceFolder}/imersaodev/aula04/site.html",
+            "pathMappings": [
+                {
+                    "url": "file:///home/caesarvictor/Documentos/programa%C3%A7%C3%A3o",
+                    "path": "${workspaceFolder}"
+                },
+                {
+                    "url": "file:///home/caesarvictor/Documentos/programa%C3%A7%C3%A3o",
+                    "path": "${workspaceFolder}"
+                }
+            ]
+        },
+        {
+            "name": "Flutter",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib/main.dart"
+        },
         {
             "name": "gcc - Criar e depurar o arquivo ativo",
             "type": "cppdbg",

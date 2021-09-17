@@ -3,23 +3,15 @@ var filmes = [["her", "https://upload.wikimedia.org/wikipedia/pt/9/9b/Her.jpg"],
     ["laranja mecanica", "https://br.web.img2.acsta.net/c_310_420/medias/nmedia/18/91/05/58/20127559.jpg"]]
 
 for (var url in filmes) {
-    printImg(filmes[url][1])
-}
-
-function printImg(url) {
-    document.write("<img src=" + url + ">")
+    document.write("<img src=" + filmes[url][1] + ">")
 }
 
 function procura(nome, url) {
-    for(var i in filmes) {
-        if (nome == filmes[i][0] || url == filmes[i][1]){
+    for (var i = 0; i < filmes.length; i++) {
+        if (nome == filmes[i][0] || url == filmes[i][1]) {
             return true
-            break;
         }
-        else{
-            return false
-        }
-    }
+    } return false
 }
 
 function addFilme() {
@@ -30,6 +22,6 @@ function addFilme() {
         texto.innerHTML = "Filme repetido";
     } else {
         filmes.push([nome, url]);
-        document.write("<img src=" + filmes[filmes.length-1][1] + ">");
+        document.body.innerHTML += "<img src=" + url + ">"
     }
 }
