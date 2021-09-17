@@ -12,7 +12,7 @@ function printImg(url) {
 
 function procura(nome, url) {
     for(var i in filmes) {
-        if (nome == filmes[i][0]){
+        if (nome == filmes[i][0] || url == filmes[i][1]){
             return true
             break;
         }
