@@ -9,17 +9,7 @@
             "request": "launch",
             "reAttach": true,
             "name": "Launch site.html",
-            "file": "${workspaceFolder}/imersaodev/aula04/site.html",
-            "pathMappings": [
-                {
-                    "url": "file:///home/caesarvictor/Documentos/programa%C3%A7%C3%A3o",
-                    "path": "${workspaceFolder}"
-                },
-                {
-                    "url": "file:///home/caesarvictor/Documentos/programa%C3%A7%C3%A3o",
-                    "path": "${workspaceFolder}"
-                }
-            ]
+            "file": "${workspaceFolder}/imersaodev/aula06/site.html",
         },
         {
             "name": "Flutter",
