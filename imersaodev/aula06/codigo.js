@@ -35,16 +35,18 @@ function adicionarEvento(evento, i) {
 }
 
 function addJogador(fase) {
-    var adicionar = document.getElementById("adicionar")
+    var adicionar = document.getElementById("manuseio")
+    var aviso = document.getElementById("aviso")
+    aviso.innerHTML = ""
     if (fase == "1") {
         adicionar.innerHTML = "<br><input type='text' id='nomeJogador' placeholder='Insira o nome de Jogador(a)'>"
-        adicionar.innerHTML += " <button id='botao' onClick='addJogador(2)'>Adicionar</button>"
+        adicionar.innerHTML += " <button id='add' onClick='addJogador(2)'>Adicionar</button>"
     } else {
         var nome = document.getElementById("nomeJogador").value
         var achou = false
         jogadores.forEach(function (e) {
             if (e.nome == nome) {
-                adicionar.innerHTML += "<br>Nome de jogador(a) ja existente"
+                aviso.innerHTML = "<br>Nome de jogador(a) ja existente"
                 achou = true
             }
         })
@@ -59,6 +61,42 @@ function addJogador(fase) {
             }
             jogadores.push(jogador)
         }recarrega(jogadores)
-        adicionar.innerHTML = "<br><button id='botao' onClick='addJogador(1)'>Adicionar</button>"
+        adicionar.innerHTML = "<br><button id='add' onClick='addJogador(1)'>Adicionar</button>"
+        adicionar.innerHTML += "<button id='rmv' onClick='rmvJogador(1)'>Remover</button>"
     }
+}
+
+function rmvJogador(fase) {
+    var remover = document.getElementById("manuseio")
+    var aviso = document.getElementById("aviso")
+    aviso.innerHTML = ""
+    if (fase == "1") {
+        remover.innerHTML = "<br><input type='text' id='nomeJogador' placeholder='Insira o nome de Jogador(a)'>"
+        remover.innerHTML += " <button id='rmv' onClick='rmvJogador(2)'>Remover</button><br>"
+    } else {
+        var nome = document.getElementById("nomeJogador").value
+        var achou = false
+        for(var i = 0; i < jogadores.length; i++) {
+            if (jogadores[i].nome == nome) {
+                aviso.innerHTML = "<br>Jogador(a) "+ nome + " Removido"
+                achou = true
+                jogadores.splice(i, 1)
+                recarrega(jogadores)
+            }
+        }if(!achou){
+            aviso.innerHTML = nome + "<br>não é um(a) jogador(a) valido"
+        }
+        remover.innerHTML = "<br><button id='add' onClick='addJogador(1)'>Adicionar</button>"
+        remover.innerHTML += "<button id='rmv' onClick='rmvJogador(1)'>Remover</button>"
+    }
+}
+    
+function zera() {
+    jogadores.forEach(function(jogador){
+        jogador.vitorias = 0
+        jogador.empates = 0
+        jogador.derrotas = 0
+        jogador.pontos = 0
+    })
+    recarrega(jogadores)
 }
