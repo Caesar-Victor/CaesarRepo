@@ -42,14 +42,19 @@ h2 {
     align-items: flex-end;
 }
 
-#carta-jogador h3 {
-    text-align: center;
+.carta-imagem {
+    border: 2px solid rgb(128, 10, 10);
+    height: 100px;
+    width: 70px;
+    margin: 10px;
 }
 
-.carta-imagem {
-    border: 1px solid black;
+.carta-imagem2 {
+    border: 2px solid rgb(10, 18, 128);
     height: 100px;
+    width: 70px;
     margin: 10px;
+    position: relative;
 }
 
 .carta-imagem img {
@@ -68,4 +73,14 @@ h2 {
 
 .opcoes {
     color: white;
+}
+.carta-jogador {
+    text-align: left;
+    color: rgb(128, 10, 10);
+}
+.carta-maquina {
+    text-align: right;
+    color:rgb(10, 18, 128);
+    position: relative;
+    top: -140px; left: 0px;
 }
