@@ -63,17 +63,18 @@ function jogar() {
     })
     var resultado = document.getElementById("resultado")
 
-    if (atributoSelecionado == '') {
+    if (atributoSelecionado != '') {
+        if (cartaJogador.atributos[atributoSelecionado] > cartaMaquina.atributos[atributoSelecionado]) {
+            resultado.innerHTML = "<h2>Você venceu!!</h2>"
+        } else if (cartaJogador.atributos[atributoSelecionado] == cartaMaquina.atributos[atributoSelecionado]) {
+            resultado.innerHTML = "<h2>Empatou</h2>"
+        } else {
+            resultado.innerHTML = "<h2>Você perdeu!</h2>"
+        } document.getElementById("btnSortear").disabled = false
+        document.getElementById("btnJogar").disabled = true
+    } else  {
         resultado.innerHTML = "<h2>Selecione um atributo</h2>"
-    } else if (cartaJogador.atributos[atributoSelecionado] > cartaMaquina.atributos[atributoSelecionado]) {
-        resultado.innerHTML = "<h2>Você venceu!!</h2>"
-    } else if (cartaJogador.atributos[atributoSelecionado] == cartaMaquina.atributos[atributoSelecionado]) {
-        resultado.innerHTML = "<h2>Empatou</h2>"
-    } else {
-        resultado.innerHTML = "<h2>Você perdeu!</h2>"
     }
-    document.getElementById("btnSortear").disabled = false
-    document.getElementById("btnJogar").disabled = true
 }
 
 function exibirCarta(url, quem) {
