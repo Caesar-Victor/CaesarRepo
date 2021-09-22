@@ -1,38 +1,27 @@
-var carta1 = {
-    nome: "yugi",
-    imagem: 'https://ms.yugipedia.com//c/c4/YamiYugi-DULI.png',
-    atributos: {
-        ataque: 7,
-        defesa: 5,
-        magia: 9
-    }
-}
-var carta2 = {
-    nome: "joey",
-    imagem: 'https://static.wikia.nocookie.net/yugioh/images/0/0e/JoeyWheelerDT.png/revision/latest?cb=20190614194910',
-    atributos: {
-        ataque: 8,
-        defesa: 3,
-        magia: 5
-    }
-}
-var carta3 = {
-    nome: "tea",
-    imagem: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/627fe721-846f-4f75-ac61-111ca00b27dd/de05j7r-f3afd08a-09e1-4c76-9867-b8031cb87528.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzYyN2ZlNzIxLTg0NmYtNGY3NS1hYzYxLTExMWNhMDBiMjdkZFwvZGUwNWo3ci1mM2FmZDA4YS0wOWUxLTRjNzYtOTg2Ny1iODAzMWNiODc1MjgucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.xgMNI1dGAxyhm9xWn4gysJ0kFOx0eliuxncOwUCi8_s',
-    atributos: {
-        ataque: 3,
-        defesa: 8,
-        magia: 5
-    }
-}
+var baralho = [["YUGI", "https://ms.yugipedia.com//c/c4/YamiYugi-DULI.png", 7, 5, 9],
+    ["JOEY", "https://static.wikia.nocookie.net/yugioh/images/0/0e/JoeyWheelerDT.png", 8, 3, 5],
+    ["TEA", "https://ms.yugipedia.com//e/e3/T%C3%A9aGardner-DULI.png", 3, 8, 5],
+    ["MOKUBA", "https://static.wikia.nocookie.net/yugioh/images/9/99/MokubaKaiba-DULI.png", 5, 5, 5],
+    ["MAGA NEGRA", "superTrunfo.png", 10, 10, 10]]
 
-var cartas = [carta1, carta2, carta3]
+var cartas = []
+
+baralho.forEach(function(e) {
+    var carta = {nome: '', imagem: '', atributos: {ataque:0, defesa:0, magia:0}}
+    carta.nome = e[0]
+    carta.imagem = e[1]
+    carta.atributos['ataque'] = e[2]
+    carta.atributos['defesa'] = e[3]
+    carta.atributos['magia'] = e[4]
+    cartas.push(carta)
+})
+
 var cartaMaquina
 var cartaJogador
 
 function sortearCarta() {
-    var jogador = parseInt(Math.random() * 3)
-    var maquina = parseInt(Math.random() * 3)
+    var jogador = parseInt(Math.random() * cartas.length)
+    var maquina = parseInt(Math.random() * cartas.length)
     cartaMaquina = cartas[maquina]
     cartaJogador = cartas[jogador]
     document.getElementById("btnSortear").disabled = true
