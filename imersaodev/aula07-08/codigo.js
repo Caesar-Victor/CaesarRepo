@@ -5,19 +5,23 @@ var baralho = [["YUGI", "https://ms.yugipedia.com//c/c4/YamiYugi-DULI.png", 7, 5
     ["MAGA NEGRA", "superTrunfo.png", 10, 10, 10]]
 
 var cartas = []
-
-baralho.forEach(function(e) {
-    var carta = {nome: '', imagem: '', atributos: {ataque:0, defesa:0, magia:0}}
-    carta.nome = e[0]
-    carta.imagem = e[1]
-    carta.atributos['ataque'] = e[2]
-    carta.atributos['defesa'] = e[3]
-    carta.atributos['magia'] = e[4]
-    cartas.push(carta)
-})
-
 var cartaMaquina
 var cartaJogador
+
+function preencheBaralho() {
+    baralho.forEach(function(e) {
+        var carta = {nome: '', imagem: '', atributos: {ataque:0, defesa:0, magia:0}}
+        carta.nome = e[0]
+        carta.imagem = e[1]
+        carta.atributos['ataque'] = e[2]
+        carta.atributos['defesa'] = e[3]
+        carta.atributos['magia'] = e[4]
+        cartas.push(carta)
+    })
+    
+}
+
+preencheBaralho()
 
 function sortearCarta() {
     var jogador = parseInt(Math.random() * cartas.length)
@@ -28,8 +32,6 @@ function sortearCarta() {
     document.getElementById("btnJogar").disabled = false
     exibirCarta(cartaJogador.imagem, "j")
     exibirCarta(cartaMaquina.imagem, "m")
-
-
 }
 
 function exibirOpcoes() {
