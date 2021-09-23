@@ -32,6 +32,7 @@ function sortearCarta() {
     document.getElementById("btnJogar").disabled = false
     exibirCarta(cartaJogador.imagem, "j")
     exibirCarta(cartaMaquina.imagem, "m")
+    document.getElementById("resultado").innerHTML=""
 }
 
 function exibirOpcoes() {
