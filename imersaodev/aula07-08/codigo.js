@@ -37,7 +37,6 @@ function sortearCarta() {
 
 function exibirOpcoes() {
     var texto = ""
-
     for (var atributo in cartaJogador.atributos) {
         texto += "<input type='radio' name='atributo' value='" + atributo + "'>" + atributo + " " + cartaJogador.atributos[atributo] + "<br>"
     }
@@ -47,14 +46,12 @@ function exibirOpcoes() {
 function jogar() {
     var atributo = document.getElementsByName("atributo")
     var atributoSelecionado = ''
-
     atributo.forEach(function (e) {
         if (e.checked) {
             atributoSelecionado = e.value
         }
     })
     var resultado = document.getElementById("resultado")
-
     if (atributoSelecionado != '') {
         if (cartaJogador.atributos[atributoSelecionado] > cartaMaquina.atributos[atributoSelecionado]) {
             resultado.innerHTML = "<h2>Você venceu!!</h2>"
@@ -74,7 +71,6 @@ function exibirCarta(url, quem) {
         var moldura = `<img src="https://www.alura.com.br/assets/img/imersoes/dev-2021/card-super-trunfo-transparent.png" style=" width: inherit; height: inherit; position: absolute;">`;
         var tagHTML = "<div id='opcoes' class='carta-status'>"
         var nome = ""
-
     if (quem == 'j') {
         nome = `<p class="carta-subtitle">${cartaJogador.nome}`
         div = document.getElementById('carta-jogador')
@@ -85,7 +81,4 @@ function exibirCarta(url, quem) {
         div.innerHTML = moldura + nome + tagHTML + "</div>"
     }
     div.style.backgroundImage = `url(${url})`
-
-
-
 }
