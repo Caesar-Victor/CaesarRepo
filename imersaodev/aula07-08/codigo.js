@@ -1,12 +1,18 @@
-var baralho = [["YUGI", "https://ms.yugipedia.com//c/c4/YamiYugi-DULI.png", 7, 5, 9],
+var baralho = [["YUGI", "https://ms.yugipedia.com//c/c4/YamiYugi-DULI.png", 6, 6, 9],
     ["JOEY", "https://static.wikia.nocookie.net/yugioh/images/0/0e/JoeyWheelerDT.png", 8, 3, 5],
     ["TEA", "https://ms.yugipedia.com//e/e3/T%C3%A9aGardner-DULI.png", 3, 8, 5],
     ["MOKUBA", "https://static.wikia.nocookie.net/yugioh/images/9/99/MokubaKaiba-DULI.png", 5, 5, 5],
-    ["MAGA NEGRA", "superTrunfo.png", 10, 10, 10]]
+    ["MAGA NEGRA", "superTrunfo.png", 10, 10, 10],
+    ["KAIBA", "https://static.wikia.nocookie.net/yugioh/images/2/23/SetoKaiba-DL.png", 9, 4, 8],
+    ["MAI", "https://static.wikia.nocookie.net/yugioh/images/3/3d/Npc-kujaku-mai.jpg", 6, 6, 3],
+    ["MERRICK", "https://static.wikia.nocookie.net/yugioh/images/f/f7/YamiMarik-DULI.png", 2, 8, 8],
+    ["WEEVIL", "https://ms.yugipedia.com//thumb/8/8c/Weevil-MDDG.png/257px-Weevil-MDDG.png", 6, 7, 3],
+    ["TRISTAN", "https://static.wikia.nocookie.net/yugioh/images/0/07/TristanTaylorMD.png", 3, 2, 2]]
 
-var cartas = []
-var cartaMaquina
+var cartasJogador = []
+var cartasMaquina = []
 var cartaJogador
+var cartaMaquina
 
 function preencheBaralho() {
     baralho.forEach(function(e) {
@@ -16,7 +22,10 @@ function preencheBaralho() {
         carta.atributos['ataque'] = e[2]
         carta.atributos['defesa'] = e[3]
         carta.atributos['magia'] = e[4]
-        cartas.push(carta)
+        if(Math.random() > 0.5 && cartasJogador.length < (baralho.length/2))
+            cartasJogador.push(carta)
+        else
+            cartasMaquina.push(carta)
     })
     
 }
@@ -24,10 +33,10 @@ function preencheBaralho() {
 preencheBaralho()
 
 function sortearCarta() {
-    var jogador = parseInt(Math.random() * cartas.length)
-    var maquina = parseInt(Math.random() * cartas.length)
-    cartaMaquina = cartas[maquina]
-    cartaJogador = cartas[jogador]
+    var ij = parseInt(Math.random() * cartasJogador.length)
+    var im = parseInt(Math.random() * cartasMaquina.length)
+    cartaJogador = cartasJogador[ij]
+    cartaMaquina = cartasMaquina[im]
     document.getElementById("btnSortear").disabled = true
     document.getElementById("btnJogar").disabled = false
     exibirCarta(cartaJogador, "j")
@@ -54,16 +63,23 @@ function jogar() {
     var resultado = document.getElementById("resultado")
     if (atributoSelecionado != '') {
         if (cartaJogador.atributos[atributoSelecionado] > cartaMaquina.atributos[atributoSelecionado]) {
-            resultado.innerHTML = "<h2>Você venceu!!</h2>"
-        } else if (cartaJogador.atributos[atributoSelecionado] == cartaMaquina.atributos[atributoSelecionado]) {
+            cartasJogador.push(cartaMaquina)
+            cartasMaquina.splice(cartasMaquina.indexOf(cartaMaquina), 1)
+            if (cartasMaquina.length <= 1) 
+                gameOver('v')
+            resultado.innerHTML = "<h2>Você venceu!!</h2>"       
+        } else if (cartaJogador.atributos[atributoSelecionado] < cartaMaquina.atributos[atributoSelecionado]) {
+            cartasMaquina.push(cartaJogador)
+            cartasJogador.splice(cartasJogador.indexOf(cartaJogador), 1)
+            if(cartasJogador.length<=1)
+                gameOver('p')
+            resultado.innerHTML = "<h2>Você perdeu!<br>Lhe restam "+cartasJogador.length+" cartas</h2>"
+        } else 
             resultado.innerHTML = "<h2>Empatou</h2>"
-        } else {
-            resultado.innerHTML = "<h2>Você perdeu!</h2>"
-        } document.getElementById("btnSortear").disabled = false
+        document.getElementById("btnSortear").disabled = false
         document.getElementById("btnJogar").disabled = true
-    } else  {
-        resultado.innerHTML = "<h2>Selecione um atributo</h2>"
-    }
+    } else  
+        resultado.innerHTML = "<h2>Selecione um atributo</h2>"   
 }
 
 function exibirCarta(carta, quem) {
@@ -79,4 +95,17 @@ function exibirCarta(carta, quem) {
         div.innerHTML = moldura + nome + tagHTML + "</div>"
     }
     div.style.backgroundImage = `url(${carta.imagem})`
+}
+
+function gameOver(evento) {
+    var elementos = ["btnSortear", "form"]
+    elementos.forEach(function(e) {
+        document.getElementById(e).style.display='none'
+    })
+    var texto = document.getElementById("form")
+    if (evento == 'v')
+        texto.innerHTML = "<h1 class='page-title'><br><br>PARABÉNS!!!<br>VOCÊ GANOHU!</h1>"
+    else
+        texto.innerHTML = "<h1 class='page-title'><br><br>GAME OVER!!!<br>VOCÊ FOI RAPADO!</h1>"
+    texto.style.display = ''
 }
