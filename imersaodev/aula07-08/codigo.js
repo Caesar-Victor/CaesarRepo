@@ -30,8 +30,8 @@ function sortearCarta() {
     cartaJogador = cartas[jogador]
     document.getElementById("btnSortear").disabled = true
     document.getElementById("btnJogar").disabled = false
-    exibirCarta(cartaJogador.imagem, "j")
-    exibirCarta(cartaMaquina.imagem, "m")
+    exibirCarta(cartaJogador, "j")
+    exibirCarta(cartaMaquina, "m")
     document.getElementById("resultado").innerHTML=""
 }
 
@@ -66,19 +66,17 @@ function jogar() {
     }
 }
 
-function exibirCarta(url, quem) {
+function exibirCarta(carta, quem) {
         var div 
         var moldura = `<img src="https://www.alura.com.br/assets/img/imersoes/dev-2021/card-super-trunfo-transparent.png" style=" width: inherit; height: inherit; position: absolute;">`;
         var tagHTML = "<div id='opcoes' class='carta-status'>"
-        var nome = ""
+        var nome = `<p class="carta-subtitle">${carta.nome}`
     if (quem == 'j') {
-        nome = `<p class="carta-subtitle">${cartaJogador.nome}`
         div = document.getElementById('carta-jogador')
         div.innerHTML = moldura + nome + tagHTML + exibirOpcoes() + "</div>"
     } else {
-        nome = `<p class="carta-subtitle">${cartaMaquina.nome}`
         div = document.getElementById('carta-maquina')
         div.innerHTML = moldura + nome + tagHTML + "</div>"
     }
-    div.style.backgroundImage = `url(${url})`
+    div.style.backgroundImage = `url(${carta.imagem})`
 }
