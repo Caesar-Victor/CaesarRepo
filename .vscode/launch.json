@@ -9,7 +9,7 @@
             "request": "launch",
             "reAttach": true,
             "name": "Launch site.html",
-            "file": "${workspaceFolder}/imersaodev/aula07/site.html",
+            "file": "${workspaceFolder}/imersaodev/aula09/site.html",
         },
         {
             "name": "Flutter",
