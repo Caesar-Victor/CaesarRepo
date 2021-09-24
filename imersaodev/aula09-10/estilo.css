@@ -18,9 +18,13 @@ body {
     padding: 64px;
 }
 
+.cabeçalho {
+    display: flex;
+    justify-content: space-between;
+}
+
 .perfil {
     display: flex;
-    align-items: center;
 }
 
 .perfil-foto {
@@ -42,15 +46,50 @@ body {
     font-size: 24px;
 }
 
+.tema button {
+    align-self: flex-end;
+    font-weight: 400;
+    font-size: 20px;
+    padding: 8px 16px;
+    background: #ecf4ff;
+    border-radius: 100px;
+}
+
 .projetos {
     background: linear-gradient(236.85deg, #82cfa5 27.26%, #2e633f 96.03%);
     display: flex;
     flex-direction: column;
     border-radius: 20px;
-    margin-top: 20px;
-    font-weight: 400;
-    font-size: 20px
+    margin-top: 32px;
+    padding: 32px;
+    box-shadow: 2px 2px 4px rgba(16, 16, 16, 0.42);
 }
+
+.redesSociais {
+    display: flex;
+    justify-content: flex-end;
+}
+
 .redesSociais img {
     height: 64px;
+    align-items: center;
+    margin: 16px;
+}
+
+.projeto-titulo {
+    list-style: none;
+    font-weight: 700;
+    font-size: 36px;
+}
+
+.projeto-item {
+    list-style-type: none;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 48px;
+}
+
+.projeto-item a {
+    color: #1c1c1c;
+    text-decoration: none;
 }
