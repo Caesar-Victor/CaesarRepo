@@ -1,6 +1,7 @@
-//encode
+// encode
 #include <stdio.h>
 #include <string.h>
+
 void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
 {
   int i;
@@ -11,17 +12,10 @@ void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
     *r2 = *r2 + pass[i] * (i - 5);
   }
 }
-int main()
+void encode(FILE *arquivo, char *senha, char *nome)
 {
-  FILE *arquivo;
-  char nome[500], x[200];
-  char senha[500], car, ca;
+  char car, ca, c1, c2, c3, c4;
   int k = 0;
-  printf("Digite o nome do arquivo a ser codificado: ");
-  gets(nome);
-  arquivo = fopen(nome, "rb");
-  strcpy(x, nome);
-  char c1, c2, c3, c4;
   c1 = fgetc(arquivo);
   c2 = fgetc(arquivo);
   c3 = fgetc(arquivo);
@@ -29,39 +23,56 @@ int main()
   if ((c1 == 'E') && (c2 == 'N') && (c3 == 'C') && (c4 == 'D'))
   {
     printf("Arquivo ja codificado");
-    return;
+    return 0;
   }
-  rewind(arquivo);
-  printf("Digite uma senha, quando terminar aperte ENTER: \n");
-  do
+  else
   {
-    car = getch();
-    senha[k] = car;
-    k++;
-    printf("*");
-  } while (car != 13);
-  senha[k] = 0;
-  char s1, s2;
-  gera_raizes(senha, &s1, &s2);
-  FILE *novo;
-  strcat(nome, ".enc");
-  novo = fopen(nome, "wb");
-  fprintf(novo, "ENCD%c%c", s1, s2);
-  int cont = 0;
-  while (!feof(arquivo))
-  {
-    ca = fgetc(arquivo);
-    if (cont % 2 == 0)
+    rewind(arquivo);
+    printf("Digite uma senha, quando terminar aperte ENTER: \n");
+    do
     {
-      fprintf(novo, "%c", (ca + s1));
-    }
-    else if (cont % 2 != 0)
+      car = getchar();
+      senha[k] = car;
+      k++;
+      printf("*");
+    } while (car != 13);
+    senha[k] = 0;
+    char s1, s2;
+    gera_raizes(senha, &s1, &s2);
+    FILE *novo;
+    strcat(nome, ".enc");
+    novo = fopen(nome, "wb");
+    fprintf(novo, "ENCD%c%c", s1, s2);
+    int cont = 0;
+    while (!feof(arquivo))
     {
-      fprintf(novo, "%c", (ca + s2));
+      ca = fgetc(arquivo);
+      if (cont % 2 == 0)
+      {
+        fprintf(novo, "%c", (ca + s1));
+      }
+      else if (cont % 2 != 0)
+      {
+        fprintf(novo, "%c", (ca + s2));
+      }
+      cont++;
     }
-    cont++;
+    fclose(novo);
   }
+}
+int main()
+{
+  FILE *arquivo;
+  char nome[500], senha[500];
+  printf("Digite o nome do arquivo a ser codificado: ");
+  fgets(nome, sizeof(nome), stdin);
+
+  if ((arquivo = fopen(nome, "r")) != NULL)
+    encode(arquivo, senha, nome);
+  else
+    printf("Erro na leitura do arquivo!\n");
+
   fclose(arquivo);
-  fclose(novo);
-  remove(x);
+  remove(nome);
+  remove(senha);
 }
