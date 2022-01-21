@@ -1,6 +1,7 @@
 // encode
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
 {
@@ -12,54 +13,67 @@ void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
     *r2 = *r2 + pass[i] * (i - 5);
   }
 }
+
 void encode(FILE *arquivo, char *senha, char *nome)
 {
-  char car, ca, c1, c2, c3, c4;
+  char car, ca;
   int k = 0;
+  if (check(arquivo))
+  {
+    printf("Arquivo ja codificado");
+    return;
+  }
+  rewind(arquivo);
+  recebeSenha(senha);
+  char s1, s2;
+  gera_raizes(senha, &s1, &s2);
+  FILE *novo;
+  strcat(nome, ".enc");
+  novo = fopen(nome, "wb");
+  fprintf(novo, "ENCD%c%c", s1, s2);
+  int cont = 0;
+  while (!feof(arquivo))
+  {
+    ca = fgetc(arquivo);
+    if (cont % 2 == 0)
+    {
+      fprintf(novo, "%c", (ca + s1));
+    }
+    else if (cont % 2 != 0)
+    {
+      fprintf(novo, "%c", (ca + s2));
+    }
+    cont++;
+  }
+  fclose(novo);
+}
+
+bool check(FILE *arquivo){
+  char car, ca, c1, c2, c3, c4;
   c1 = fgetc(arquivo);
   c2 = fgetc(arquivo);
   c3 = fgetc(arquivo);
   c4 = fgetc(arquivo);
   if ((c1 == 'E') && (c2 == 'N') && (c3 == 'C') && (c4 == 'D'))
-  {
-    printf("Arquivo ja codificado");
-    return 0;
-  }
+    return true;
   else
-  {
-    rewind(arquivo);
-    printf("Digite uma senha, quando terminar aperte ENTER: \n");
-    do
-    {
-      car = getchar();
-      senha[k] = car;
-      k++;
-      printf("*");
-    } while (car != 13);
-    senha[k] = 0;
-    char s1, s2;
-    gera_raizes(senha, &s1, &s2);
-    FILE *novo;
-    strcat(nome, ".enc");
-    novo = fopen(nome, "wb");
-    fprintf(novo, "ENCD%c%c", s1, s2);
-    int cont = 0;
-    while (!feof(arquivo))
-    {
-      ca = fgetc(arquivo);
-      if (cont % 2 == 0)
-      {
-        fprintf(novo, "%c", (ca + s1));
-      }
-      else if (cont % 2 != 0)
-      {
-        fprintf(novo, "%c", (ca + s2));
-      }
-      cont++;
-    }
-    fclose(novo);
-  }
+    return false;
 }
+
+void recebeSenha(char *senha){
+  int k;
+  char car;
+  printf("Digite uma senha, quando terminar aperte ENTER: \n");
+  do
+  {
+    car = getchar();
+    senha[k] = car;
+    k++;
+    printf("*");
+  } while (car != 13);
+  senha[k] = 0;
+} 
+
 int main()
 {
   FILE *arquivo;
