@@ -14,7 +14,8 @@ void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
   }
 }
 
-bool check(FILE *arquivo){
+bool check(FILE *arquivo)
+{
   char car, ca, c1, c2, c3, c4;
   c1 = fgetc(arquivo);
   c2 = fgetc(arquivo);
@@ -26,25 +27,28 @@ bool check(FILE *arquivo){
     return false;
 }
 
-void recebeSenha(char *senha){
-  int k;
+void recebeSenha(char *senha)
+{
+  int k = 0;
   char car;
   printf("Digite uma senha, quando terminar aperte ENTER: \n");
-  do
+  car = getchar();
+  while (car != '\n')
   {
-    car = getchar();
     senha[k] = car;
     k++;
     printf("*");
-  } while (car != 13);
+    car = getchar();
+  };
   senha[k] = 0;
-} 
+}
 
 void encode(FILE *arquivo, char *nome)
 {
   char car, ca, senha[500];
   int k = 0;
-  if (check(arquivo))  {
+  if (check(arquivo))
+  {
     printf("Arquivo ja codificado");
     return;
   }
@@ -80,6 +84,7 @@ int main()
   char nome[300];
   printf("Digite o nome do arquivo a ser codificado: ");
   scanf("%s", nome);
+  getchar();
   if ((arquivo = fopen(nome, "r")) != NULL)
     encode(arquivo, nome);
   else
