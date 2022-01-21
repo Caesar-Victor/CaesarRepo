@@ -40,6 +40,7 @@ void recebeSenha(char *senha)
     printf("*");
     car = getchar();
   };
+  printf("\n");
   senha[k] = 0;
 }
 
@@ -58,7 +59,7 @@ void encode(FILE *arquivo, char *nome)
   gera_raizes(senha, &s1, &s2);
   FILE *novo;
   strcat(nome, ".enc");
-  novo = fopen(nome, "wb");
+  novo = fopen(nome, "w");
   fprintf(novo, "ENCD%c%c", s1, s2);
   int cont = 0;
   while (!feof(arquivo))
@@ -74,8 +75,8 @@ void encode(FILE *arquivo, char *nome)
     }
     cont++;
   }
-  fclose(novo);
   remove(senha);
+  fclose(novo);
 }
 
 int main()
@@ -91,5 +92,4 @@ int main()
     printf("Erro na leitura do arquivo!\n");
 
   fclose(arquivo);
-  remove(nome);
 }
