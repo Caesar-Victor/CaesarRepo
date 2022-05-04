@@ -15,16 +15,17 @@ def decomposicao_lu_tridiagonal(vetor_c, vetor_b, vetor_a, d):
     n=len(vetor_b) # n é a quantidade de elementos da diagonal principal
     
     # Construção da matriz A (tridiagonal) a partir de vetor_c, vetor_b e vetor_a.
-    A = np.zeros((n-1, n-1))
+    A = np.zeros((n, n))
+
+    for i in range(0, n): # Geração da diagonal principal
+        A[i, i]=vetor_b[i]
+        
+    for i in range(0, n-1): # Geração das diagonais secundárias
+        A[i,i+1]=vetor_c[i]
+        A[i+1,i]=vetor_a[i]
+    
     vetor_u = np.zeros(n-1)
     vetor_l = np.zeros(n-1)
-    
-    for i in range(0, n - 1):
-        A[i, i] = vetor_b[i]
-        
-    for i in range(0, n-2):
-        A[i,i+1] = vetor_c[i]
-        A[i+1,i] = vetor_a[i]
     
     vetor_u[0]=vetor_b[0]
     
@@ -45,3 +46,5 @@ def decomposicao_lu_tridiagonal(vetor_c, vetor_b, vetor_a, d):
         x[i]=(y[i]-vetor_c[i]*x[i+1])/vetor_u[i]
     
     return vetor_l, vetor_u, x
+
+l, u, sol=decomposicao_lu_tridiagonal(np.array([2, 4]), np.array([1, 3, 1]), np.array([1, 2]), np.array([3, 2, 4]))
