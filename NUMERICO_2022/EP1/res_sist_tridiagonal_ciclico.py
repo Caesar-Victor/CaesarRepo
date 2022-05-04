@@ -8,7 +8,7 @@ import numpy as np
 import math
 from decomp_lu_tridiagonal_v2 import decomposicao_lu_tridiagonal
 
-n=3
+n=5
 a=np.zeros(n)
 c=np.zeros(n)
 b=np.zeros(n)
@@ -22,7 +22,7 @@ d=np.zeros(n)
 #a[0]=0
 #b[0]=2
 #d[0]=math.cos((2*math.pi)/n**2)
-
+'''
 for i in range(n-1):
     a[i]=((2*(i+1))-1)/(4*(i+1))
     b[i]=2
@@ -34,10 +34,15 @@ b[n-1]=2
 d[n-1]=math.cos(2*math.pi)
 
 c=1-a
+'''
 
+a=[0,1,2,3,4]
+b=[0,1,2,3,4]
+c=[0,1,2,3,4]
+d=[0,1,2,3,4]
 
 # Geração dos vetores v e w:
-v= np.zeros(n)
+v=np.zeros(n)
 w=np.zeros(n)
 
 v[0]=a[0]
@@ -48,11 +53,11 @@ w[n-1]=a[n-1]
 
 #l1, u1, x_til=decomposicao_lu_tridiagonal(vetor_c, vetor_a, vetor_b, vetor_d)
 l2, u2, y_til=decomposicao_lu_tridiagonal(c, a, b, d)
-l3, u3, z_til=decomposicao_lu_tridiagonal(c, a, b, v)
+#l3, u3, z_til=decomposicao_lu_tridiagonal(c, a, b, v)
 
-x_n=(d[n-1]-c[n-1]*y_til[0]-a[n-1]*y_til[n-2])/(b[n-1]-c[n-1]*z_til[0]-a[n-1]*z_til[n-2])
+#x_n=(d[n-1]-c[n-1]*y_til[0]-a[n-1]*y_til[n-2])/(b[n-1]-c[n-1]*z_til[0]-a[n-1]*z_til[n-2])
 
-x_til=y_til-x_n*z_til
+#x_til=y_til-x_n*z_til
 
 # Verificar
 #w*x_til
