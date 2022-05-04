@@ -75,6 +75,7 @@ void encode(FILE *arquivo, char *nome)
     }
     cont++;
   }
+  printf("SUCESSO!\n");
   remove(senha);
   fclose(novo);
 }
