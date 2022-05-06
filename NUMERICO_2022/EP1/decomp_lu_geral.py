@@ -6,7 +6,6 @@
 
 import numpy as np
 
-
 def decomposicao_lu_geral(A):
     N = len(A)
     # Inicialização das matrizes U e L.

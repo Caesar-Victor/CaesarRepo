@@ -9,7 +9,7 @@ import math
 
 #from recebe_variaveis import recebe_variaveis_usuario
 from decomposicao_lu_geral_v2 import decomposicao_lu_geral
-from decomp_lu_tridiagonal_v2 import decomposicao_lu_tridiagonal
+from EP1.decomp_lu_tridiagonal_v1 import decomposicao_lu_tridiagonal
 # decomposicao_lu_tridiagonal(vetor_c, vetor_b, vetor_a, d):
 
 # Geração dos dados:
