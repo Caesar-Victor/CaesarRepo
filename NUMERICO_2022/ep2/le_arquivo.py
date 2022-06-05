@@ -13,7 +13,6 @@ def isfloat(x):
             return False
       return True
 
-
 def n(x):
       arquivo = open("dados.txt", "r")
       n6 = np.zeros((3,2))
@@ -41,7 +40,3 @@ def n(x):
                   count += 1
       if x==10:
             return n10
-      
-
-
-n(10)
