@@ -5,17 +5,15 @@
 ############################################################
 
 import numpy as np
+import math
 
 from le_arquivo import n
 
-# f(x) = 1 cubo
 def f1(x):
-    return 1
+    return 1-x**2
 
-# f(x)= -x+1 tetraedro
 def f2(x):
-    return -x+1
-
+    return math.sqrt(1-x)
 
 def integra(x):
     n1=n(x)
@@ -29,4 +27,5 @@ def integra(x):
 
 x = int(input("Digite a precisão de nós (6, 8 ou 10): "))
 soma1, soma2 = integra(x)
-print("O volume calculado com n", x, " do cubo é: ", soma1, "\nO volume calculado com n", x, " do trapesio é: ", soma2)
+print("O volume calculado com n", x, " na ordem dy dx é: ", soma1, "\nO volume calculado com n", x, " na ordem dx dy é: ", soma2)
+
