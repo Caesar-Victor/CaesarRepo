@@ -22,7 +22,7 @@ def integra(x):
         for j in range(len(n1)):
             F += f1(i[0], n1[j][0]) * n1[j][1]
         soma += F*i[1]
-    return soma
+    return 2*np.pi*soma
 
 
 x = int(input("Digite a precisão de nós (6, 8 ou 10): "))
