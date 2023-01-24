@@ -2,8 +2,33 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include <ncurses.h>
-#include <stdlib.h>
+#include <termios.h>
+#include <stdio.h>
+
+static struct termios old, new;
+
+void initTermios(int echo)
+{
+    tcgetattr(0, &old); //grab old terminal i/o settings
+    new = old; //make new settings same as old settings
+    new.c_lflag &= ~ICANON; //disable buffered i/o
+    new.c_lflag &= echo ? ECHO : ~ECHO; //set echo mode
+    tcsetattr(0, TCSANOW, &new); //apply terminal io settings
+}
+
+void resetTermios(void)
+{
+    tcsetattr(0, TCSANOW, &old);
+}
+
+char getch(void)
+{
+    char ch;
+    initTermios(0);
+    ch = getchar();
+    resetTermios();
+    return ch;
+}
 
 void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
 {
@@ -41,7 +66,7 @@ void recebeSenha(char *senha)
     senha[k] = car;
     k++;
     printf("*");
-  } while (car != 13);
+  } while (car != '\n');
   senha[k] = 0;
 }
 
