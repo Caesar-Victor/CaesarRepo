@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ncurses.h>
+#include <stdlib.h>
 
 void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
 {
@@ -16,7 +18,7 @@ void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
 
 bool check(FILE *arquivo)
 {
-  char car, ca, c1, c2, c3, c4;
+  char car, c1, c2, c3, c4;
   c1 = fgetc(arquivo);
   c2 = fgetc(arquivo);
   c3 = fgetc(arquivo);
@@ -32,15 +34,14 @@ void recebeSenha(char *senha)
   int k = 0;
   char car;
   printf("Digite uma senha, quando terminar aperte ENTER: \n");
-  car = getchar();
-  while (car != '\n')
+  __fpurge(stdin);
+  do
   {
+    car = getch();
     senha[k] = car;
     k++;
     printf("*");
-    car = getchar();
-  };
-  printf("\n");
+  } while (car != 13);
   senha[k] = 0;
 }
 
@@ -86,7 +87,6 @@ int main()
   char nome[300];
   printf("Digite o nome do arquivo a ser codificado: ");
   scanf("%s", nome);
-  getchar();
   if ((arquivo = fopen(nome, "r")) != NULL)
     encode(arquivo, nome);
   else

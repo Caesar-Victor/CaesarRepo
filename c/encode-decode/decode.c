@@ -1,6 +1,7 @@
 //decode
 #include <stdio.h>
 #include <string.h>
+#include <curses.h>
 
 void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
 {
