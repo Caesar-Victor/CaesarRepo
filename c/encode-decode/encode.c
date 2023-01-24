@@ -68,6 +68,7 @@ void recebeSenha(char *senha)
     printf("*");
   } while (car != '\n');
   senha[k] = 0;
+  printf("\n");
 }
 
 void encode(FILE *arquivo, char *nome)
