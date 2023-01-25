@@ -64,8 +64,8 @@ int main(void)
   }
   printf("Digite uma senha, quando terminar aperte ENTER: \n");
   __fpurge(stdin);
-  do
   car = getch();
+  do
   {
     senha[k] = car;
     k++;
@@ -90,9 +90,9 @@ int main(void)
   do
   {
     j++;
-  } while ((nome[j - 2] != 'e') && (nome[j - 1] != 'n') && (nome[j] != 'c'));
+  } while ((nome[j] != '.' || nome[j + 3] != 'c') || (nome[j + 2] != 'n') || (nome[j+1] != 'e'));
 
-  nome[j] = nome[j - 1] = nome[j - 2] = nome[j - 3] = 0;
+  nome[j] = nome[j + 1] = nome[j + 2] = nome[j + 3] = 0;
 
   novo = fopen(nome, "wb");
 
@@ -112,6 +112,6 @@ int main(void)
     cont++;
   }
   fclose(arquivo);
-  /*fclose(novo);*/
+  fclose(novo);
   remove(x);
 }
