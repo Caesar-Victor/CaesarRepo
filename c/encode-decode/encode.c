@@ -40,7 +40,7 @@ void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
   }
 }
 
-bool check(FILE *arquivo)
+bool checaExitencia(FILE *arquivo)
 {
   char car, c1, c2, c3, c4;
   c1 = fgetc(arquivo);
@@ -73,9 +73,9 @@ void recebeSenha(char *senha)
 
 void encode(FILE *arquivo, char *nome)
 {
-  char car, ca, senha[500];
+  char ca, senha[500];
   int k = 0;
-  if (check(arquivo))
+  if (checaExitencia(arquivo))
   {
     printf("Arquivo ja codificado");
     return;
@@ -117,6 +117,6 @@ int main()
     encode(arquivo, nome);
   else
     printf("Erro na leitura do arquivo!\n");
-
   fclose(arquivo);
+  return 0;
 }
