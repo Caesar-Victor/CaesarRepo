@@ -3,7 +3,6 @@
 #include <string.h>
 #include <stdbool.h>
 #include <termios.h>
-#include <stdio.h>
 
 static struct termios old, new;
 
@@ -60,12 +59,13 @@ void recebeSenha(char *senha)
   char car;
   printf("Digite uma senha, quando terminar aperte ENTER: \n");
   __fpurge(stdin);
+  car = getch();
   do
   {
-    car = getch();
     senha[k] = car;
     k++;
     printf("*");
+    car = getch();
   } while (car != '\n');
   senha[k] = 0;
   printf("\n");

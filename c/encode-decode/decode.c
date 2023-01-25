@@ -1,7 +1,33 @@
 //decode
 #include <stdio.h>
 #include <string.h>
-#include <curses.h>
+#include <stdbool.h>
+#include <termios.h>
+
+static struct termios old, new;
+
+void initTermios(int echo)
+{
+    tcgetattr(0, &old); //grab old terminal i/o settings
+    new = old; //make new settings same as old settings
+    new.c_lflag &= ~ICANON; //disable buffered i/o
+    new.c_lflag &= echo ? ECHO : ~ECHO; //set echo mode
+    tcsetattr(0, TCSANOW, &new); //apply terminal io settings
+}
+
+void resetTermios(void)
+{
+    tcsetattr(0, TCSANOW, &old);
+}
+
+char getch(void)
+{
+    char ch;
+    initTermios(0);
+    ch = getchar();
+    resetTermios();
+    return ch;
+}
 
 void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
 {
@@ -13,6 +39,7 @@ void gera_raizes(const char *pass, unsigned char *r1, unsigned char *r2)
     *r2 = *r2 + pass[i] * (i - 5);
   }
 }
+
 int main(void)
 {
   FILE *arquivo;
@@ -20,8 +47,9 @@ int main(void)
   char senha[500], car, ca;
   int k = 0;
   printf("Digite o nome do arquivo a ser decodificado: ");
-  scanf(nome);
-  arquivo = fopen(nome, "rb");
+  scanf("%s", nome);
+  if ((arquivo = fopen(nome, "r")) == NULL)
+    printf("Erro na leitura do arquivo!\n"); 
   strcpy(x, nome);
   char c1, c2, c3, c4;
   c1 = fgetc(arquivo);
@@ -35,14 +63,17 @@ int main(void)
     return 0;
   }
   printf("Digite uma senha, quando terminar aperte ENTER: \n");
+  __fpurge(stdin);
   do
+  car = getch();
   {
-    car = getch();
     senha[k] = car;
     k++;
     printf("*");
-  } while (car != 13);
+    car = getch();
+  } while (car != '\n');
   senha[k] = 0;
+  printf("\n");
   char s1, s2, c5, c6;
   gera_raizes(senha, &s1, &s2);
   c5 = fgetc(arquivo);
@@ -59,7 +90,7 @@ int main(void)
   do
   {
     j++;
-  } while ((nome[j - 2] != 'E') && (nome[j - 1] != 'N') && (nome[j] != 'C'));
+  } while ((nome[j - 2] != 'e') && (nome[j - 1] != 'n') && (nome[j] != 'c'));
 
   nome[j] = nome[j - 1] = nome[j - 2] = nome[j - 3] = 0;
 
@@ -81,6 +112,6 @@ int main(void)
     cont++;
   }
   fclose(arquivo);
-  fclose(novo);
+  /*fclose(novo);*/
   remove(x);
 }
