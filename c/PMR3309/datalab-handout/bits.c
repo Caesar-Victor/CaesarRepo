@@ -174,7 +174,8 @@ NOTES:
  *   Rating: 1
  */
 int bitAnd(int x, int y) {
-  return 2;
+  /*Using Morgan's Laws*/
+  return ~(~x | ~y);
 }
 /* 
  * getByte - Extract byte n from word x
@@ -185,7 +186,8 @@ int bitAnd(int x, int y) {
  *   Rating: 2
  */
 int getByte(int x, int n) {
-  return 2;
+  /*(n<<3)=n*8 since each byte is 8bits, then shift in x this amount of bites (x>>(n<<3)), finally isolate the least significant byte (& 0xFF)*/
+  return (x>>(n<<3) & 0xFF);
 }
 /* 
  * logicalShift - shift x to the right by n, using a logical shift
@@ -196,7 +198,9 @@ int getByte(int x, int n) {
  *   Rating: 3 
  */
 int logicalShift(int x, int n) {
-  return 2;
+  /*(x>>n) makes the logical shift, and the mask is an implementation to clear leftmost n bits*/
+  int mask = ~(((1 << 31) >> n) << 1);
+  return (x >> n) & mask;
 }
 /*
  * bitCount - returns count of number of 1's in word
@@ -206,7 +210,7 @@ int logicalShift(int x, int n) {
  *   Rating: 4
  */
 int bitCount(int x) {
-  return 2;
+    return 2;
 }
 /* 
  * bang - Compute !x without using !
@@ -216,7 +220,10 @@ int bitCount(int x) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return 2;
+  /*with mask1 he get 1 if the bit is set and 0 otherwise, mask2 shift for the rightmost bit, than 1 is added to the result*/
+  int mask1 = x | (~x + 1);
+  int mask2 = mask1 >> 31;
+  return mask2 + 1;
 }
 /* 
  * tmin - return minimum two's complement integer 
@@ -225,7 +232,8 @@ int bang(int x) {
  *   Rating: 1
  */
 int tmin(void) {
-  return 2;
+  /*shifting 1 31 times the others bits are all 0s*/
+  return 1<<31;
 }
 /* 
  * fitsBits - return 1 if x can be represented as an 
@@ -237,7 +245,11 @@ int tmin(void) {
  *   Rating: 2
  */
 int fitsBits(int x, int n) {
-  return 2;
+  /*shift calculate the number of bits to shift, than by "shaking" x,  bits that
+  cant be represented are discarded, finally if check if x and shifted are the same.*/
+  int shift = 32 + (~n + 1); 
+  int shifted = (x << shift) >> shift;
+  return !(x ^ shifted);
 }
 /* 
  * divpwr2 - Compute x/(2^n), for 0 <= n <= 30
