@@ -220,21 +220,21 @@ int bitCount(int x) {
   int mask2 = 0x33; // 00110011
   int mask3 = 0x0F; // 00001111
 
-  mask1 = mask1 | (mask1 << 8); // Create 8-bit mask1 pattern
-  mask1 = mask1 | (mask1 << 16); // Create 16-bit mask1 pattern
+  mask1 = mask1 | (mask1 << 8);
+  mask1 = mask1 | (mask1 << 16);
 
-  mask2 = mask2 | (mask2 << 8); // Create 8-bit mask2 pattern
-  mask2 = mask2 | (mask2 << 16); // Create 16-bit mask2 pattern
+  mask2 = mask2 | (mask2 << 8);
+  mask2 = mask2 | (mask2 << 16); 
 
-  mask3 = mask3 | (mask3 << 8); // Create 8-bit mask3 pattern
-  mask3 = mask3 | (mask3 << 16); // Create 16-bit mask3 pattern
+  mask3 = mask3 | (mask3 << 8);
+  mask3 = mask3 | (mask3 << 16);
 
-  x = (x & mask1) + ((x >> 1) & mask1); // Count bits in 2-bit chunks
-  x = (x & mask2) + ((x >> 2) & mask2); // Count bits in 4-bit chunks
-  x = (x & mask3) + ((x >> 4) & mask3); // Count bits in 8-bit chunks
-  x = x + (x >> 8); // Combine 2 8-bit counts
-  x = x + (x >> 16); // Combine 2 16-bit counts
-  return x & 0x3F; // Mask out the higher bits
+  x = (x & mask1) + ((x >> 1) & mask1); 
+  x = (x & mask2) + ((x >> 2) & mask2); 
+  x = (x & mask3) + ((x >> 4) & mask3); 
+  x = x + (x >> 8); 
+  x = x + (x >> 16); 
+  return x & 0x3F; 
 }
 /* 
  * bang - Compute !x without using !
@@ -286,9 +286,9 @@ int fitsBits(int x, int n) {
 int divpwr2(int x, int n) {
   /*first reads the first bit to see the sing, than create a bias than negative 
   numbers get the right round, finally makes the operation*/
-  int sign = (x >> 31) & 1;   // Get the sign bit (0 for positive, 1 for negative)
-  int bias = (sign << n) - sign; // Create the bias for negative numbers
-  return (x + bias) >> n;     // Divide by 2^n with rounding towards zero
+  int sign = (x >> 31) & 1;
+  int bias = (sign << n) - sign; 
+  return (x + bias) >> n;     
 }
 /* 
  * negate - return -x 
@@ -322,7 +322,15 @@ int isPositive(int x) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-  return 2;
+  /*shifts sing to lest significant bit, makes it AND 1 isolating it,
+  get the sing of the difference, y-x our y+-C2(x), first compare the sings 
+  of x and y, with OR operator compares with the case that y and x has the same 
+  sign.*/
+  int sign_x = (x >> 31) & 1;  
+  int sign_y = (y >> 31) & 1;  
+  int sign_diff = ((y + (~x + 1)) >> 31) & 1;  
+
+  return (sign_x & !sign_y) | (!(sign_x ^ sign_y) & !sign_diff);
 }
 /*
  * ilog2 - return floor(log base 2 of x), where x > 0
@@ -332,7 +340,18 @@ int isLessOrEqual(int x, int y) {
  *   Rating: 4
  */
 int ilog2(int x) {
-  return 2;
+  /*result is initialized as 0, x is shifted by 2^4 and if it is non zero result gets 
+  one shifted by 4 otherwise 0, the same to 3, 2, 1 and 0, adding the results*/
+  int result = 0;
+
+  result = (!!(x >> 16)) << 4;
+  result = result + ((!!(x >> (result + 8))) << 3);
+  result = result + ((!!(x >> (result + 4))) << 2);
+  result = result + ((!!(x >> (result + 2))) << 1);
+  result = result + (!!(x >> (result + 1)));
+
+  return result;
+
 }
 /* 
  * float_neg - Return bit-level equivalent of expression -f for
