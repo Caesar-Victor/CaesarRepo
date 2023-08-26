@@ -298,6 +298,7 @@ int divpwr2(int x, int n) {
  *   Rating: 2
  */
 int negate(int x) {
+  /*two's complement negation*/
   return ~x+1;
 }
 /* 
@@ -308,7 +309,10 @@ int negate(int x) {
  *   Rating: 3
  */
 int isPositive(int x) {
-  return 2;
+  /*shift sing bit to least significant bit, that gives
+  -1 for negatives and 0 for positives, than combines 
+  with !x so if x=0 it will also return 1*/
+  return !((x>>31) | !x);
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
