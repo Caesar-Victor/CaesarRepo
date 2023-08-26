@@ -210,7 +210,31 @@ int logicalShift(int x, int n) {
  *   Rating: 4
  */
 int bitCount(int x) {
-    return 2;
+  /*firs are created 3 masks, mask1 with alternated bits, mask 2 with couple 
+  alternated bit and mask 3 with tuple alternated bits, than are created masks 
+  patterns by operation or with masks and themselves shifted by nbits, for example,
+  mask1 = 01010101, mask1 | (mask1 << 8) = 101010101010101, with operator AND (&)
+  x is counted by 2-2, 4-4 and 8-8 bits, and all is concatenated, finally bits above
+  64 are hided, since an int has 8 bytes or 64 bits*/
+  int mask1 = 0x55; // 01010101
+  int mask2 = 0x33; // 00110011
+  int mask3 = 0x0F; // 00001111
+
+  mask1 = mask1 | (mask1 << 8); // Create 8-bit mask1 pattern
+  mask1 = mask1 | (mask1 << 16); // Create 16-bit mask1 pattern
+
+  mask2 = mask2 | (mask2 << 8); // Create 8-bit mask2 pattern
+  mask2 = mask2 | (mask2 << 16); // Create 16-bit mask2 pattern
+
+  mask3 = mask3 | (mask3 << 8); // Create 8-bit mask3 pattern
+  mask3 = mask3 | (mask3 << 16); // Create 16-bit mask3 pattern
+
+  x = (x & mask1) + ((x >> 1) & mask1); // Count bits in 2-bit chunks
+  x = (x & mask2) + ((x >> 2) & mask2); // Count bits in 4-bit chunks
+  x = (x & mask3) + ((x >> 4) & mask3); // Count bits in 8-bit chunks
+  x = x + (x >> 8); // Combine 2 8-bit counts
+  x = x + (x >> 16); // Combine 2 16-bit counts
+  return x & 0x3F; // Mask out the higher bits
 }
 /* 
  * bang - Compute !x without using !
