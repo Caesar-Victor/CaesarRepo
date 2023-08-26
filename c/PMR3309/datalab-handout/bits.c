@@ -270,7 +270,7 @@ int tmin(void) {
  */
 int fitsBits(int x, int n) {
   /*shift calculate the number of bits to shift, than by "shaking" x,  bits that
-  cant be represented are discarded, finally if check if x and shifted are the same.*/
+  cant be represented are discarded, finally checks if x and shifted are the same.*/
   int shift = 32 + (~n + 1); 
   int shifted = (x << shift) >> shift;
   return !(x ^ shifted);
@@ -284,7 +284,11 @@ int fitsBits(int x, int n) {
  *   Rating: 2
  */
 int divpwr2(int x, int n) {
-    return 2;
+  /*first reads the first bit to see the sing, than create a bias than negative 
+  numbers get the right round, finally makes the operation*/
+  int sign = (x >> 31) & 1;   // Get the sign bit (0 for positive, 1 for negative)
+  int bias = (sign << n) - sign; // Create the bias for negative numbers
+  return (x + bias) >> n;     // Divide by 2^n with rounding towards zero
 }
 /* 
  * negate - return -x 
