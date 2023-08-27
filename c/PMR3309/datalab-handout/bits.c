@@ -365,7 +365,16 @@ int ilog2(int x) {
  *   Rating: 2
  */
 unsigned float_neg(unsigned uf) {
- return 2;
+  /*sign_mask is the sign to -f, than compare if uf is higher than possible value
+  for float, in that case, NaN, if it is, return itself, else, the sign is flipped*/
+  
+  unsigned sign_mask = 0x80000000;
+
+  if ((uf & 0x7FFFFFFF) > 0x7F800000) {
+      return uf;
+  }
+
+  return uf ^ sign_mask;
 }
 /* 
  * float_i2f - Return bit-level equivalent of expression (float) x
