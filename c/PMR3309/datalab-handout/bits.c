@@ -386,31 +386,20 @@ unsigned float_neg(unsigned uf) {
  *   Rating: 4
  */
 unsigned float_i2f(int x) {
-    unsigned sign, exponent, fraction, biased_exponent, result;
-
-    if (x == 0) {
-        return 0; // Special case: zero
-    }
-
-    if (x == 0x80000000) {
-        return 0xCF000000; // Special case: minimum negative integer
-    }
-
-    sign = (x < 0) ? 1 : 0;
-    x = (sign) ? -x : x; // Make x positive if negative
-
-    exponent = 31;
-    while ((x >> exponent) == 0) {
-        exponent--;
-    }
-
-    biased_exponent = exponent + 127;
-    fraction = (x << (31 - exponent)) & 0x7FFFFFFF;
-
-    result = (sign << 31) | (biased_exponent << 23) | fraction;
-
-    return result;
+  /**/
+  if (x==0)  return 0;
+  unsigned s = x>>31;
+  x = x<0 ? -x : x;
+  unsigned E = ilog2(x);
+  unsigned exp = E + 127;
+  unsigned frac = x ^ (1<<E);
+      
+  if (E>=23)  frac >>= E-23;
+  else  frac <<= 23-E;
+  
+  return s<<31 | exp<<23 | frac;
 }
+
 /* 
  * float_twice - Return bit-level equivalent of expression 2*f for
  *   floating point argument f.
