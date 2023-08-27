@@ -386,7 +386,30 @@ unsigned float_neg(unsigned uf) {
  *   Rating: 4
  */
 unsigned float_i2f(int x) {
-  return 2;
+    unsigned sign, exponent, fraction, biased_exponent, result;
+
+    if (x == 0) {
+        return 0; // Special case: zero
+    }
+
+    if (x == 0x80000000) {
+        return 0xCF000000; // Special case: minimum negative integer
+    }
+
+    sign = (x < 0) ? 1 : 0;
+    x = (sign) ? -x : x; // Make x positive if negative
+
+    exponent = 31;
+    while ((x >> exponent) == 0) {
+        exponent--;
+    }
+
+    biased_exponent = exponent + 127;
+    fraction = (x << (31 - exponent)) & 0x7FFFFFFF;
+
+    result = (sign << 31) | (biased_exponent << 23) | fraction;
+
+    return result;
 }
 /* 
  * float_twice - Return bit-level equivalent of expression 2*f for
@@ -400,5 +423,35 @@ unsigned float_i2f(int x) {
  *   Rating: 4
  */
 unsigned float_twice(unsigned uf) {
-  return 2;
+  /*with help of masks, uf is dismembered in sign (1 bit), exponent (8 bits) and 
+  fraction (23 bits), if this exponent is to big, it's NaN, and immediately returned,
+  else, if exponent is zero,fraction is shifted with 1 added to the end, with 
+  means fraction*2, base gets 1, fraction is normalized and number is returned, 
+  else, exponent is acresed by 1, with means f*2, if exponent got the higher value 
+  function gets 0, and the number is returned, else, the number is returned.*/
+  unsigned sign_mask = 0x80000000;  
+  unsigned exponent_mask = 0x7F800000; 
+  unsigned fraction_mask = 0x007FFFFF; 
+
+  unsigned sign = uf & sign_mask;
+  unsigned exponent = uf & exponent_mask;
+  unsigned fraction = uf & fraction_mask;
+
+  if (exponent == 0x7F800000) {
+    return uf;
+  }
+
+  if (exponent == 0) {
+    fraction <<= 1;
+    if (fraction & 0x800000) {
+      exponent = 0x00800000;
+      fraction &= fraction_mask;
+    }
+  }else {
+    exponent += 0x00800000;
+    if (exponent == 0x7F800000) {
+      fraction = 0;
+    }
+  }
+  return sign | exponent | fraction;
 }
