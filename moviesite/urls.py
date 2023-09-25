@@ -19,7 +19,7 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    path('staticpages/', include('staticpages.urls')), # adicionar esta linha
+    path('', include('staticpages.urls')), # adicionar esta linha
     path('admin/', admin.site.urls),
 ]
 

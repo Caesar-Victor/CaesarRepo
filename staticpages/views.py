@@ -1,5 +1,11 @@
-from django.shortcuts import HttpResponse
+from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse("<h1>Hello World! <h2>#MMO</h2></h1>")
+    context = {}
+    return render(request, 'staticpages/index.html', context)
+
+
+def about(request):
+    context = {}
+    return render(request, 'staticpages/about.html', context)
