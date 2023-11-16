@@ -1,2 +1,0 @@
-Projeto feito em Python, versão 3.8.2, com PIP3, versão 20.0.2, codificado em UTF-8.
-Como o teste.txt eram numeros em uma pagina, nao necesariamente um arquivo baixavel em txt, é aconselhado o uso do arquivo teste.txt enviado no zip, nao foram feitas alterações no que foi copiado e colado da pagina, mesmo sabendo que algumas alterações facilitariam e otimizariam muito o precesso, portanto, foi feito um tratamento dos dados recebidos, mesmo assim, um arquivo teste.txt diferente pode vir a causar alguma diferença.
