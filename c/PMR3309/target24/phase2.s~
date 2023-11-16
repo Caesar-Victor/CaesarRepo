@@ -1,0 +1,2 @@
+	movq $0x19195f9f, %rdi
+	retq

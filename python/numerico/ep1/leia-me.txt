@@ -1,0 +1,8 @@
+decomp_lu_geral:
+      implementação para decomposição LU de uma matriz quadrada qualquer triangularizável pelo Método de Eliminação de Gauss sem trocas de linhas.
+
+decomp_lu_tridiagonal:
+      implementação para decomposição LU de uma matriz quadrada tridiagonal triangularizável pelo Método de Eliminação de Gauss sem trocas de linhas.
+
+red_sis_tridiagonal_ciclico:
+      implementação para decomposição LU de uma matriz quadrada tridiagonal ciclica triangularizável pelo Método de Eliminação de Gauss sem trocas de linhas.
