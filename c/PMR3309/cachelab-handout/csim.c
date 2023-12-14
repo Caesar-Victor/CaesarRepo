@@ -8,76 +8,109 @@
 #include <string.h>
 
 #define _ERRO_ARGUMENTO -10
-#define _ERRO_ARQUIVO   -20
+#define _ERRO_ARQUIVO -20
 
 /* Globals set by command line args */
 int verbosity = 0; /* print trace if set */
-int s = 0; /* set index bits */
-int b = 0; /* block offset bits */
-int E = 0; /* associativity */
-char* trace_file = NULL;
+int s = 0;         /* set index bits */
+int b = 0;         /* block offset bits */
+int E = 0;         /* associativity */
+char *trace_file = NULL;
 int h = 0;
 int m = 0;
 int e = 0;
 
-typedef struct {
+typedef struct
+{
     int valid;
     unsigned int tag;
+    int LRU;
 } Linha;
 
-typedef struct {
-    Linha* linhas;
+typedef struct
+{
+    Linha *linhas;
 } Set;
 
-typedef struct {
+typedef struct
+{
     int num_sets;
-    Set* sets;
+    Set *sets;
 } Cache;
 
-Cache initCache(int num_sets, int associcao) {
+Cache initCache(int num_sets)
+{
     Cache cache;
     cache.num_sets = num_sets;
     cache.sets = malloc(num_sets * sizeof(Set));
 
-    for(int i=0; i<num_sets; i++) {
-        cache.sets[i].linhas = malloc(associcao * sizeof(Linha));
-        for (int j = 0; j < associcao; j++)        {
+    for (int i = 0; i < num_sets; i++)
+    {
+        cache.sets[i].linhas = malloc(E * sizeof(Linha));
+        for (int j = 0; j < E; j++)
+        {
             cache.sets[i].linhas[j].valid = 0;
+            cache.sets[i].linhas[j].LRU = 0;
+            cache.sets[i].linhas[j].tag = 0;
         }
     }
     return cache;
 }
 
-void simCache(Cache* cache, unsigned long addr) {
-    unsigned long set_i = (addr >> b) & ((1<<s)-1);
-    unsigned long tag = addr >> (s + b);
+void simCache(Cache *cache, unsigned long addr, char c)
+{
+    unsigned long int set_i = (addr >> b) & ((1 << s) - 1);
+    unsigned long int tag = addr >> (s + b);
     int lru = 0;
 
-    for(int i = 0; i < E; i++) {
-        if (cache->sets[set_i].linhas[i].valid && 
-            cache->sets[set_i].linhas[i].tag == tag) {
+    for (int i = 0; i < E; i++)
+    {
+        if (cache->sets[set_i].linhas[i].LRU < cache->sets[set_i].linhas[lru].LRU)
+        {
+            lru = i;
+        }
+        if (cache->sets[set_i].linhas[i].valid &&
+            cache->sets[set_i].linhas[i].tag == tag)
+        {
+            cache->sets[set_i].linhas[i].LRU = m;
             h++;
+            if (c == 'M')
+            {
+                h++;
+            }
             return;
         }
-        else if (!cache->sets[set_i].linhas[i].valid) {
+        else if (!cache->sets[set_i].linhas[i].valid)
+        {
+
             cache->sets[set_i].linhas[i].valid = 1;
             cache->sets[set_i].linhas[i].tag = tag;
+            cache->sets[set_i].linhas[i].LRU = m;
+
             m++;
+            if (c == 'M')
+            {
+                h++;
+            }
             return;
         }
     }
 
-    int evitado = 0;
-    cache->sets[set_i].linhas[evitado].tag = tag;
-    cache->sets[set_i].linhas[evitado].valid = 1;
+    cache->sets[set_i].linhas[lru].valid = 1;
+    cache->sets[set_i].linhas[lru].LRU = m;
+    cache->sets[set_i].linhas[lru].tag = tag;
     e++;
     m++;
+    if (c == 'M')
+    {
+        h++;
+    }
 }
 
 /*
  * printUsage - Print usage info
  */
-void printUsage(char* argv[])
+void printUsage(char *argv[])
 {
     printf("Usage: %s [-hv] -s <num> -E <num> -b <num> -t <file>\n", argv[0]);
     printf("Options:\n");
@@ -93,24 +126,27 @@ void printUsage(char* argv[])
     exit(0);
 }
 
-
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-    FILE* arquivo;
+    FILE *arquivo;
     char linha[512];
 
     unsigned int tam;
     unsigned long endr;
+    char id;
 
     /* Verifica argumentos */
-    if(argc<2) {
+    if (argc < 2)
+    {
         fprintf(stderr, "Argumento faltando: nome de arquivo\n");
         return _ERRO_ARGUMENTO;
     }
-    
+
     char c;
-    while( (c=getopt(argc,argv,"s:E:b:t:vh")) != -1){
-        switch(c){
+    while ((c = getopt(argc, argv, "s:E:b:t:vh")) != -1)
+    {
+        switch (c)
+        {
         case 's':
             s = atoi(optarg);
             break;
@@ -137,20 +173,23 @@ int main(int argc, char* argv[])
 
     arquivo = fopen(trace_file, "r");
 
-    if(!arquivo){
+    if (!arquivo)
+    {
         fprintf(stderr, "Erro ao abrir arquivo %s: %s\n", trace_file, strerror(errno));
         return _ERRO_ARQUIVO;
     }
 
-    Cache cache = initCache(1<<s, E);
+    Cache cache = initCache(1 << s);
 
-    while(fgets(linha, 512, arquivo) != NULL) {
-        if(linha[1]=='S' || linha[1]=='L' || linha[1]=='M') {
-            sscanf(linha+3, "%lx,%u", &endr, &tam);
-            simCache(&cache, endr);
+    while (fgets(linha, 512, arquivo) != NULL)
+    {
+        if (linha[1] == 'S' || linha[1] == 'L' || linha[1] == 'M')
+        {
+            sscanf(linha + 3, "%lx,%u", &endr, &tam);
+            simCache(&cache, endr, linha[1]);
         }
     }
-    
+
     fclose(arquivo);
     printSummary(h, m, e);
     return 0;
