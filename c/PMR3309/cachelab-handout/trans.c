@@ -40,22 +40,20 @@ int tamBlock(int v)
 
 char transpose_submit_desc[] = "Transpose submission";
 void transpose_submit(int M, int N, int A[N][M], int B[M][N])
-{   
-    int miss, diag;
+{
+    int miss;
     int tb = tamBlock(M);
 
     for (int l_n = 0; l_n < N; l_n += tb)
     {
         for (int c_n = 0; c_n < M; c_n += tb)
         {
-
             for (int i = l_n; (i < l_n + tb) && (i < N); i++)
             {
                 for (int j = c_n; (j < c_n + tb) && (j < M); j++)
                 {
                     if (i == j)
                     {
-                        diag = i;
                         miss = A[i][j];
                     }
                     else
@@ -63,10 +61,9 @@ void transpose_submit(int M, int N, int A[N][M], int B[M][N])
                         B[j][i] = A[i][j];
                     }
                 }
-
                 if (l_n == c_n)
                 {
-                    B[diag][diag] = miss;
+                    B[i][i] = miss;
                 }
             }
         }
